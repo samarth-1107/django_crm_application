@@ -2,17 +2,30 @@ from django.shortcuts import render, redirect
 from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from .models import Record
 
+# LANDING PAGE : 
 def home(request):
     return render(request,'webapp/index.html')
 
+# USER DASHBOARD : 
+
+@login_required(login_url='login')
+def dashboard(request):
+    admin_records = Record.objects.all()
+    context = {'admin_records':admin_records}
+    return render(request,'webapp/user/dashboard.html', context=context)
+
+
+# USER AUTHENTICATION
 def register(request):
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            # return redirect('')
+            return redirect('login')
     context = {'form':form}
     return render(request,'webapp/user/register.html', context=context)
 
@@ -26,9 +39,13 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None :
                 auth.login(request, user)
-                # return redirect('')
+                return redirect('dashboard')
     context = {'login_form': login_form}
     return render (request, 'webapp/user/login.html', context=context)
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
     
 
 

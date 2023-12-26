@@ -1,0 +1,40 @@
+{% extends 'webapp/base.html' %}
+{% block title %}Dashboard {%endblock%}
+{% block content %}
+<h2>Welcome to your dashboard, {{user}}!</h2>
+<hr>
+<a href="{% url 'dashboard' %}" class="btn btn-outline-primary btn-sm">Create a new record</a>
+<hr>
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Country</th>
+            <th scope="col">View</th>
+        </tr>
+    </thead>
+    {% for admin_record in admin_records %}
+    <tbody>
+        <tr>
+            <th scope="row">{{admin_record.id}}</th>
+            <td>{{admin_record.first_name}} {{admin_record.last_name}}</td>
+            <td>{{admin_record.email}}</td>
+            <td>{{admin_record.phone}}</td>
+            <td>{{admin_record.address}}</td>
+            <td>{{admin_record.city}}</td>
+            <td>{{admin_record.state}}</td>
+            <td>{{admin_record.country}}</td>
+            <td><a href="{% url 'dashboard' %}">View</a></td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+
+
+{%endblock%}
