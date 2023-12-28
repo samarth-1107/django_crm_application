@@ -29,6 +29,27 @@ def create_record(request):
     context = {'create_record_form':create_record_form}
     return render (request, 'webapp/user/create-record.html', context=context)
 
+# UPDATE RECORD
+@login_required(login_url='login')
+def update_record(request, pk):
+    record = Record.objects.get(id=pk)
+    update_record_form = UpdateRecordForm(instance=record)
+    if request.method=="POST":
+        update_record_form = UpdateRecordForm(request.POST, instance=record)
+        if update_record_form.is_valid():
+            update_record_form.save()
+            return redirect("dashboard")
+    context = {'update_record_form':update_record_form}
+    return render (request, 'webapp/crud/update-record.html', context=context)
+
+# VIEW A RECORD : 
+@login_required(login_url='login')
+def view_record(request, pk):
+    all_records = Record.objects.get(id=pk)
+    context = {'record': all_records}
+    return render (request, 'webapp/crud/view-record.html', context=context)
+
+
 # USER AUTHENTICATION
 def register(request):
     form = CreateUserForm()

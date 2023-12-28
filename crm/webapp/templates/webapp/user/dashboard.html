@@ -30,7 +30,7 @@
             <td>{{admin_record.city}}</td>
             <td>{{admin_record.state}}</td>
             <td>{{admin_record.country}}</td>
-            <td><a href="{% url 'dashboard' %}">View</a></td>
+            <td><a href="{% url 'view-record' admin_record.id %}">View</a></td>
         </tr>
     </tbody>
     {% endfor %}
