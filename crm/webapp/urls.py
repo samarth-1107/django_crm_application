@@ -11,5 +11,6 @@ urlpatterns = [
     path('create-record', views.create_record, name="create-record"),
     path('update-record/<int:pk>', views.update_record, name="update-record"),
     path('view-record/<int:pk>', views.view_record, name="view-record"),
+    path('delete-record/<int:pk>', views.delete_record, name="delete-record"),
 
 ]

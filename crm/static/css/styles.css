@@ -1,5 +1,13 @@
+.index-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
 .form-layout {
     border-radius: 15px;
-    width: 500px;
+    width: 50vw;
 
 }

@@ -49,6 +49,12 @@ def view_record(request, pk):
     context = {'record': all_records}
     return render (request, 'webapp/crud/view-record.html', context=context)
 
+# DELETE RECORD : 
+@login_required(login_url='login')
+def delete_record(request, pk):
+    record = Record.objects.get(id=pk)
+    record.delete()
+    return redirect ('dashboard')
 
 # USER AUTHENTICATION
 def register(request):
