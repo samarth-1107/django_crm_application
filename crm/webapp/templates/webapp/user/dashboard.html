@@ -31,11 +31,30 @@
             <td>{{admin_record.city}}</td>
             <td>{{admin_record.state}}</td>
             <td>{{admin_record.country}}</td>
-            <td><a href="{% url 'view-record' admin_record.id %}">View</a></td>
+            <td><a href="{% url 'view-record' admin_record.id %}"><i class="fa fa-eye"></i></a></td>
         </tr>
     </tbody>
     {% endfor %}
 </table>
-
+<div class="container d-flex justify-content-center align-items-center">
+    <nav aria-label="...">
+        <ul class="pagination">
+            {% if admin_records.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{admin_records.previous_page_number}}" tabindex="-1"
+                    aria-disabled="true">Previous</a>
+            </li>
+            {% endif %}
+            {% for page in total_page_list %}
+            <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+            {% endfor %}
+            {% if admin_records.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{admin_records.next_page_number}}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 
 {%endblock%}

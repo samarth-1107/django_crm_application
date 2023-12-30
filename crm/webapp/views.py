@@ -4,6 +4,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .models import Record
+from django.core.paginator import Paginator
 
 # LANDING PAGE : 
 def home(request):
@@ -14,7 +15,14 @@ def home(request):
 @login_required(login_url='login')
 def dashboard(request):
     admin_records = Record.objects.all()
-    context = {'admin_records':admin_records}
+    paginator = Paginator(admin_records,5)
+    page_number=request.GET.get('page')
+    final_admin_records = paginator.get_page(page_number)
+    total_pages = final_admin_records.paginator.num_pages
+    context = {
+        'admin_records':final_admin_records,
+        'total_page_list':[n+1 for n in range(total_pages) ]
+        }
     return render(request,'webapp/user/dashboard.html', context=context)
 
 # CREATE A RECORD
